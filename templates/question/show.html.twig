@@ -18,7 +18,7 @@
                         <h3 class="me-10">{{ question.title }}</h3>
                         <div class="question-tag">QUESTION</div>
                         <a href="{{ path('user', { id: question.author.id }) }}" class="d-flex flex-row align-items-center ms-auto">
-                            <img class="avatar me-10" src="{{ question.author.picture }}" alt="img profil">
+                            <img class="avatar me-10" src="{{ asset(question.author.picture) }}" alt="img profil">
                             <small><span class="clickable">{{ question.author.fullname }}</span></small>
                         </a>
                     </div>
@@ -30,7 +30,7 @@
                                 {% include 'partials/_rating.html.twig' with { rating: comment.rating, from: 'comment', id: comment.id } %}
                                 <div class="d-flex flex-column">
                                     <a href="{{ path('user', { id: comment.author.id }) }}" class="d-flex flex-row-nowrap align-items-center pb-10">
-                                        <img class="avatar me-10" src="{{ comment.author.picture }}" alt="avatar">
+                                        <img class="avatar me-10" src="{{ asset(comment.author.picture) }}" alt="avatar">
                                         <p class="clickable">{{ comment.author.fullname }}</p>
                                         <small class="ms-auto">{{ comment.createdAt|ago(locale='fr') }}</small>
                                     </a>
