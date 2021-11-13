@@ -12,7 +12,7 @@
             </ul>
         </div>
 
-        {%- if is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
+        {%- if is_granted('IS_AUTHENTICATED_FULLY') || is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
             <div class="d-flex flex-row-nowrap justify-content-center hide-xs">
                 <a href="{{ path('current_user') }}">
                     <img src="{{ app.user.picture }}" alt="Picture user" class="avatar avatar-lg me-10">
@@ -33,7 +33,7 @@
     </div>
 </header>
 <div class="menu-xs d-flex flex-column hidden">
-    {%- if is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
+    {%- if is_granted('IS_AUTHENTICATED_FULLY') || is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
         <a href="{{ path('current_user') }}">Profil</a>
         <a href="{{ path('logout') }}">Se déconnecter</a>
     {% else %}
