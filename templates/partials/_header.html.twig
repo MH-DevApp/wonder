@@ -1,0 +1,43 @@
+<header class="d-flex flex-row-nowrap justify-content-center p-20">
+    <div class="content flex-fill d-flex flex-row-nowrap align-items-center justify-content-between">
+        <a class="header-logo" href="{{ path('home') }}">
+            <img src="{{ asset('build/images/logo.svg') }}" alt="logo">
+        </a>
+        <div id="search" class="header-search p-10 flex-fill d-flex flex-row-nowrap align-items-center">
+            <i class="fas fa-search me-10"></i>
+            <input @focus="focusInput" @blur="blurInput" @input="updateInput" ref="input" type="text" class="flex-fill" placeholder="Rechercher...">
+            <img v-if="isLoading" src="{{ asset('build/images/loading.gif') }}" alt="loading" class="header-search-loading">
+            <ul class="header-search-result d-flex flex-column" v-if="questions?.length">
+                <a v-for="question in questions" :key="question.id" v-bind:href="'/question/' + question.id">${ question.title }$</a>
+            </ul>
+        </div>
+
+        {%- if is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
+            <div class="d-flex flex-row-nowrap justify-content-center hide-xs">
+                <a href="{{ path('current_user') }}">
+                    <img src="{{ app.user.picture }}" alt="Picture user" class="avatar avatar-lg me-10">
+                </a>
+                <small class="d-flex flex-column justify-content-center">
+                    <a href="{{ path('logout') }}">Se déconnecter</a>
+                </small>
+            </div>
+        {%- else -%}
+        <div class="hide-xs">
+            <a href="{{ path('signup') }}" class="btn btn-primary me-5">Inscription</a>
+            <a href="{{ path('login') }}" class="btn btn-primary-stroke">Connexion</a>
+        </div>
+        {%- endif -%}
+        <div class="show-xs burger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+<div class="menu-xs d-flex flex-column hidden">
+    {%- if is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
+        <a href="{{ path('current_user') }}">Profil</a>
+        <a href="{{ path('logout') }}">Se déconnecter</a>
+    {% else %}
+        <a href="{{ path('signup') }}" class="btn btn-primary me-5">Inscription</a>
+        <a href="{{ path('login') }}" class="btn btn-primary-stroke">Connexion</a>
+    {%- endif -%}
+</div>

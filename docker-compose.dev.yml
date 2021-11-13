@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysql:
+    network_mode: 'host'
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - type: volume
+        source: dbtest
+        target: /var/lib/mysql
+
+  php:
+    network_mode: 'host'
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+    volumes:
+      - type: volume
+        source: tls
+        target: /root/.symfony/certs
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        target: /app/vendor
+
+  node:
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: Dockerfile.encore.dev
+    volumes:
+      - type: volume
+        source: tls
+        target: /root/.symfony/certs
+      - type: volume
+        target: /app/node_modules
+      - type: bind
+        target: /app
+        source: .
+
+volumes:
+  dbtest:
+  tls:

@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  db:
+    image: mysql
+    container_name: db_wonder
+    volumes:
+      - type: volume
+        source: db_wonder
+        target: /var/lib/mysql
+    ports:
+      - "3101:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "password"
+    networks:
+      - dev
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_wonder
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3102:80"
+    environment:
+      PMA_HOST: db
+    networks:
+      - dev
+
+networks:
+  dev:
+
+volumes:
+  db_wonder:
+    external: true

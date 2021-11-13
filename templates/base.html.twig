@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block styleSheets %}
+{#            <link rel="stylesheet" href="{{ asset('css/style.css') }}">#}
+            {{ encore_entry_link_tags('app') }}
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {% endblock %}
+        {% block javaScripts %}
+            {#        <script src="{{ asset('js/index.js') }}" defer></script>#}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class="d-flex flex-column">
+        {{ include('partials/_header.html.twig') }}
+        <div class="app-content flex-fill d-flex flex-row-nowrap justify-content-center">
+            <div class="content-main d-flex flex-row-nowrap flex-column-xs flex-fill">
+                {{ include('partials/_sidebar.html.twig') }}
+                <div class="flex-fill">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        {% for cat, list in app.flashes %}
+            {% for message in list %}
+                <div class="flash flash-{{ cat }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        {{ include('partials/_footer.html.twig') }}
+    </body>
+</html>

@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+#    volumes:
+#      - type: bind
+#        source:
+    ports:
+      - "80:80"
+      - "443:443"
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - type: volume
+        source: dbprod
+        target: /var/lib/mysql
+
+  fpm:
+    build:
+      context: .
+      dockerfile: Dockerfile.fpm
+    volumes:
+      - type: volume
+        target: /app/vendor
+      - type: bind
+        target: /app
+        source: .
+
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile.encore.prod
+    volumes:
+      - type: volume
+        target: /app/node_modules
+      - type: bind
+        target: /app
+        source: .
+
+volumes:
+  dbprod:
