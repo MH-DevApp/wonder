@@ -35,9 +35,6 @@ services:
       - type: bind
         target: /app
         source: .
-      - type: bind
-        target: /app/public/profiles
-        source: ./public/profiles
     depends_on:
       - mysql
 
