@@ -9,6 +9,9 @@ services:
       - type: bind
         source: /root/.acme.sh/mh-devapp.ovh
         target: /certs
+      - type: bind
+        target: /app
+        source: .
     depends_on:
       - fpm
     ports:
